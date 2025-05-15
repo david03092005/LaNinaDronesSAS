@@ -1,0 +1,101 @@
+
+.usuarios-page {
+    height: 100vh;
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 4rem;
+}
+
+.usuarios-container {
+    position: relative;
+    width: 60%;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    padding: 2rem 2rem 1rem;
+    margin-top: 1rem;
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+}
+
+.tab-btn {
+    background-color: transparent;
+    color: #2c3e50;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.tab-btn::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.tab-btn.active {
+    background-color: #7faacd;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(5px); 
+}
+
+.tab-btn.active::before {
+    background-color: #7faacd;
+}
+
+.tab-btn:hover {
+    background-color: #b7cddf;
+}
+
+.small-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: #6a94b3;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #5a87a5;
+}
+
+.btn-secondary {
+    background-color: #ccd6dd;
+    border: none;
+    color: #2c3e50;
+}
+
+.btn-secondary:hover {
+    background-color: #b5c7d4;
+}
+
+.btn-danger {
+    background-color: #6a94b3;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #5a87a5;
+}

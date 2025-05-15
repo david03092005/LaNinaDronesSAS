@@ -1,0 +1,39 @@
+.navbar-custom {
+  background: linear-gradient(145deg, #7a9bb6, #527a97);
+  padding: 1rem 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-custom .nav-link {
+  color: #fff !important;
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+  color: #ffffff !important; 
+  transform: scale(1.1); 
+}
+
+.navbar-custom .nav-link.active {
+  color: #f4f7f9 !important; 
+  border-bottom: 2px solid #f4f7f9; 
+}
+
+.navbar-custom .perfil-link {
+  color: #fff !important;
+  transition: color 0.3s ease;
+}
+
+.navbar-custom .perfil-link:hover {
+  color: #7faacd !important; 
+}
+
+.navbar-custom .fa-robot {
+  transition: transform 0.3s ease;
+}
+
+.navbar-custom .fa-robot:hover {
+  transform: rotate(360deg); 
+}
