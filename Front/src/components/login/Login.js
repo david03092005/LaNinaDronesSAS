@@ -1,35 +1,60 @@
 import '../login/Login.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../../redux/modalSlice';
 import { Modal, Button } from 'react-bootstrap';
 import { FaRobot } from 'react-icons/fa';
+import { loginUser, verificarCodigo2FA} from "../../redux/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const show = useSelector((state) => state.modal.isOpen);
   
-  const [step, setStep] = useState(1); 
+  const { mensaje, loading, error, user, fase} = useSelector((state) => state.auth);
+    const [formData, setFormData] = useState({
+        usuario: "",
+        contrasena: "",
+        codigo_2fa: ""
+    });
+
+    const handleChange = (event) => {
+        setFormData({ ...formData, [event.target.name]: event.target.value });
+    };
+
 
   const handleClose = () => {
     dispatch(closeModal());
-    setStep(1); 
   };
 
-  const handleSubmitLogin = (e) => {
-    e.preventDefault();
-    console.log("Datos de login enviados");
-    setStep(2); 
-  };
+  const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData();
+        data.append("usuario", formData.usuario);
+        data.append("contrasena", formData.contrasena);
+        console.log("HOLAAA DESDE EL LOGIN");
+        dispatch(loginUser(data));
+    };
 
-  const handleSubmitToken = (e) => {
-    e.preventDefault();
-    console.log("Token enviado");
-    handleClose(); 
-     navigate('/Inicio');
-  };
+    const handleCodigoSubmit = async (event) => {
+        event.preventDefault();
+        const data = new FormData();
+        // data.append("usuario", formData.usuario);
+        // data.append("contrasena", formData.contrasena);
+        data.append("codigo_2fa", formData.codigo_2fa);
+        console.log("Código ingresado:", data.get("codigo_2fa")); // Debug
+
+        dispatch(verificarCodigo2FA(data));
+    };
+
+    useEffect(() => {
+        if (user) {
+            if (user.usuario) {
+              navigate("/inicio");
+            }
+        }
+    }, [user, navigate]);
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -38,15 +63,17 @@ const Login = () => {
           <FaRobot size={50} />
         </div>
 
-        {step === 1 && (
-          <form onSubmit={handleSubmitLogin} className="mt-4">
+        {fase === "login" ? (
+          <form onSubmit={handleSubmit} className="mt-4">
             <div className="form__group field">
               <input
                 type="text"
                 className="form__field"
-                placeholder=""
-                name="nombre"
+                placeholder="Usuario"
+                name="usuario"
                 required
+                value={formData.usuario}
+                onChange={handleChange}
               />
               <label className="form__label">Nombre</label>
             </div>
@@ -56,8 +83,10 @@ const Login = () => {
                 type="password"
                 className="form__field"
                 placeholder=""
-                name="contraseña"
+                name="contrasena"
                 required
+                value={formData.contrasena}
+                onChange={handleChange}
               />
               <label className="form__label">Contraseña</label>
             </div>
@@ -66,17 +95,19 @@ const Login = () => {
               Continuar
             </Button>
           </form>
-        )}
-
-        {step === 2 && (
-          <form onSubmit={handleSubmitToken} className="mt-4">
+        )
+        :
+        (
+          <form onSubmit={handleCodigoSubmit} className="mt-4">
             <div className="form__group field">
               <input
                 type="text"
                 className="form__field"
                 placeholder=""
-                name="token"
+                name="codigo_2fa"
                 required
+                value={formData.codigo_2fa}
+                onChange={handleChange}
               />
               <label className="form__label">Código de verificación</label>
             </div>

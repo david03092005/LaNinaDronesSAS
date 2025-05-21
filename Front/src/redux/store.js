@@ -3,6 +3,8 @@ import modalReducer from "../redux/modalSlice";
 import agendamientosReducer from '../redux/agendamientoSlice';
 import robotsReducer from '../redux/robotsSlice';
 import historialReducer from '../redux/historialSlice';
+import authReducer from '../redux/authSlice';
+import bateriasReducer from '../redux/bateriasSlice';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
       agendamientos: agendamientosReducer,
       robots: robotsReducer,
       historial: historialReducer,
+      auth: authReducer,
+      baterias: bateriasReducer
     },
   });
   
