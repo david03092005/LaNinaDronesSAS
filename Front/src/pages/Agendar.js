@@ -7,8 +7,7 @@ import './Agendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-
+import { useNavigate } from "react-router-dom";
 
 function Agendar() {
     const agendamientos = useSelector((state) => state.agendamientos.lista);
@@ -16,6 +15,8 @@ function Agendar() {
     const [calendarioFecha, setCalendarioFecha] = useState(new Date());
     const {loading, success, error, message} = useSelector((state) => state.agendamientos);
     const [fechasAgendadas, setFechasAgendadas] = useState([]);
+    const cedula = useSelector((state) => state.auth.cedulaAdmin);
+    console.log(cedula);
 
     const [formData, setFormData] = useState({
         cedulaUsuario: '',
@@ -29,6 +30,14 @@ function Agendar() {
         largo: '',
         destino: ''
     });
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     const camposFormulario = [
     { name: 'cedulaUsuario', label: 'Cédula Usuario', type: 'number' },
@@ -53,7 +62,7 @@ function Agendar() {
         const data = new FormData();
 
         data.append("cedulaUsuario", formData.cedulaUsuario);
-        data.append("cedulaAdmin", formData.cedulaAdmin);
+        data.append("cedulaAdmin", cedula);
         data.append("fecha", formData.fecha);
         data.append("horaInicio", formData.horaInicio);
         data.append("estado", formData.estado);

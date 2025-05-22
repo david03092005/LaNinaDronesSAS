@@ -45,7 +45,7 @@ if ($resultadoBateria && $resultadoBateria->num_rows > 0) {
     while ($row = mysqli_fetch_assoc($resultadoBateria)) {
         $data[] = $row;
     }
-    echo json_encode(["success" => true, "message" => "Baterias disponibles", "data" => $data]);
+    echo json_encode(["success" => true, "message" => "Baterias disponibles", "data" => $data, "bateria" => $bateriaNecesaria]);
 } else {
     echo json_encode(["success" => false, "message" => "No hay baterías disponibles con suficiente carga"]);
 }

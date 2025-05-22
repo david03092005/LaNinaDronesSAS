@@ -9,7 +9,7 @@ header("Content-Type: application/json");
 
 $date = date("Y-m-d");
 
-$querry = "SELECT * FROM agendamiento WHERE fecha = '$date'";
+$querry = "SELECT * FROM agendamiento WHERE fecha = '$date' AND estado_agendamiento = 'agendado'";
 
 $result = mysqli_query($conexion, $querry);
 
@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
 }
 
-echo json_encode(["success" => true, "message" => "Agendamientos enviados", "data" => $data]);
+echo json_encode(["success" => true, "data" => $data]);
 
 mysqli_close($conexion);
 

@@ -4,11 +4,21 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRobots, seleccionarRobot } from '../redux/robotsSlice';
 import { getBaterias, seleccionarBateria } from '../redux/bateriasSlice';
-//import Webcam from 'react-webcam';
+import { useNavigate } from "react-router-dom";
 
 
 
 function Robots() {
+    const navigate = useNavigate();
+
+    const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+        }
+    }, [user, navigate]);
+    
     const ip = "http://10.196.76.160:8080/video"; 
     const dispatch = useDispatch();
 

@@ -140,13 +140,12 @@ foreach ($tiposValidos as $tipoRobot) {
     }
 }
 
-
 if ($robotDisponible !== null) {
     // Insertar en la tabla agendamiento
-    $sqlInsert = "INSERT INTO agendamiento (cedula_usuario, cedula_administrador, fecha, hora_inicio, hora_final, estado_agendamiento, ID_robot, ID_bateria, destino)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sqlInsert = "INSERT INTO agendamiento (cedula_usuario, cedula_administrador, fecha, hora_inicio, hora_final, estado_agendamiento, ID_robot, destino)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conexion->prepare($sqlInsert);
-    $stmtInsert->bind_param("iissssiis", $cedulaUsuario, $cedulaAdmin, $fecha, $horaInicio, $horaFinal, $estado, $robotDisponible, $idBateria, $destino);
+    $stmtInsert->bind_param("iissssis", $cedulaUsuario, $cedulaAdmin, $fecha, $horaInicio, $horaFinal, $estado, $robotDisponible, $destino);
     $stmtInsert->execute();
 
     echo json_encode([

@@ -5,8 +5,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button} from 'react-bootstrap';
 import { getRecord, makeReport } from '../redux/historialSlice'
 import jsPDF from 'jspdf';
+import { useNavigate } from "react-router-dom";
 
 function Historial() {
+
+    const navigate = useNavigate();
+
+    const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     const dispatch = useDispatch();
     const [generarPDF, setGenerarPDF] = useState(false);

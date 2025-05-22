@@ -3,7 +3,7 @@ import './InicioL.css';
 import React, { useEffect, useState } from 'react';
 import { Carousel, Button, Form, Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { seleccionarPedido, getApptDay, dispatchBatery } from '../redux/agendamientoSlice';
+import { seleccionarPedido, getApptDay, dispatchBatery, dispatchRobot } from '../redux/agendamientoSlice';
 import { seleccionarBateria } from '../redux/bateriasSlice';
 import { useNavigate } from "react-router-dom";
 
@@ -12,19 +12,21 @@ function InicioL() {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
     const { user } = useSelector((state) => state.auth);
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         navigate("/");
-    //     }
-    // }, [user, navigate]);
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+        }
+    }, [user, navigate]);
 
     const despachos = useSelector((state) => state.agendamientos.lista);
     const despachoSeleccionado = useSelector((state) => state.agendamientos.seleccionado);
     const baterias = useSelector((state) => state.agendamientos.listaBaterias);
     const bateriaSeleccionada = useSelector((state) => state.baterias.seleccionado);
     const mensaje = useSelector((state) => state.agendamientos.message);
+    const bateriaNecesario = useSelector((state) => state.agendamientos.bateriaNecesario);
 
     const [fechaHoy] = useState(new Date().toLocaleDateString());
     const [climaConsultado, setClimaConsultado] = useState(false);
@@ -66,7 +68,7 @@ function InicioL() {
         const data = new FormData();
         data.append("agendamiento", despachoSeleccionado.ID_agendamiento);
         dispatch(dispatchBatery(data));
-        await setAlerta({ tipo: 'info', mensaje: mensaje });
+        setAlerta({ tipo: 'info', mensaje: mensaje });
     };
 
     const handleBateriaChange = (e) => {
@@ -83,7 +85,12 @@ function InicioL() {
         setAlerta({ tipo: 'danger', mensaje: 'Debe seleccionar despacho y batería.' });
         return;
         }
-        setAlerta({ tipo: 'success', mensaje: `Despachando "${despachoSeleccionado.nombre}" con batería "${bateriaSeleccionada.nombre}".` });
+        const data = new FormData();
+        data.append("agendamiento", despachoSeleccionado.ID_agendamiento);
+        data.append("idBateria", bateriaSeleccionada.ID_bateria);
+        data.append("porcentaje", bateriaNecesario);
+        dispatch(dispatchRobot(data));
+        setAlerta({ tipo: 'success', mensaje: "Despachando" });
     };
 
     useEffect(() => {

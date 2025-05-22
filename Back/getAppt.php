@@ -38,7 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $data[] = $row;
 }
 
-echo json_encode(["success" => true, "message" => "Agendamientos enviados", "data" => $data]);
+echo json_encode(["success" => true,  "data" => $data]);
 
 mysqli_close($conexion);
 

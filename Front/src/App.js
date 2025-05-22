@@ -8,7 +8,6 @@ import Robots from "./pages/Robots"
 import Historial from "./pages/Historial"
 import Usuarios from "./pages/Usuarios"
 import InicioL from "./pages/InicioL"
-import Clima from "./pages/clima"
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
         <Route exact path = "/robots" element={<Robots />} />
         <Route exact path = "/historial" element={<Historial />} />
         <Route exact path = "/usuarios" element={<Usuarios />} />
-        <Route exact path = "/clima" element={<Clima />} />
       </Routes>
     </div>
   );

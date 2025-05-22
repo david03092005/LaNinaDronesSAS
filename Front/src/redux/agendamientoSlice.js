@@ -85,6 +85,27 @@ export const dispatchBatery = createAsyncThunk(
   }
 );
 
+export const dispatchRobot = createAsyncThunk(
+  "agendamientos/robot",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await fetch("http://localhost/back/dispatchRobot.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en la solicitud");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 // Estado inicial
 const initialState = {
   lista: [
@@ -98,6 +119,7 @@ const initialState = {
   success: false,
   error: null,
   message: "",
+  bateriaNecesario: null,
 };
 
 const agendamientosSlice = createSlice({
@@ -172,8 +194,29 @@ const agendamientosSlice = createSlice({
           state.error = false;
           state.message = action.payload.message;
           state.listaBaterias = action.payload.data;
+          state.bateriaNecesario = action.payload.bateria;
       })
       .addCase(dispatchBatery.rejected, (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.message = action.payload.message || "Error al leer los clientes.";
+          state.error = action.payload.message || "Error al leer los clientes.";
+      })
+
+      .addCase(dispatchRobot.pending, (state) => {
+          state.loading = true;
+          state.success = false;
+          state.error = false;
+          state.message = null;
+      })
+      .addCase(dispatchRobot.fulfilled, (state, action) => {
+          state.loading = false;
+          state.success = true;
+          state.error = false;
+          state.message = action.payload.message;
+          state.listaBaterias = action.payload.data;
+      })
+      .addCase(dispatchRobot.rejected, (state, action) => {
           state.loading = false;
           state.success = false;
           state.message = action.payload.message || "Error al leer los clientes.";

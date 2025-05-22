@@ -5,6 +5,7 @@ import robotsReducer from '../redux/robotsSlice';
 import historialReducer from '../redux/historialSlice';
 import authReducer from '../redux/authSlice';
 import bateriasReducer from '../redux/bateriasSlice';
+import adminReducer from '../redux/adminSlice';
 
 const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
       robots: robotsReducer,
       historial: historialReducer,
       auth: authReducer,
-      baterias: bateriasReducer
+      baterias: bateriasReducer,
+      admin: adminReducer
     },
   });
   
