@@ -103,12 +103,14 @@ function Usuarios() {
     };
 
     const handleDelete = (cedulaAdminE) => {
-        if (cedulaAdminE === cedulaAdmin) {
+        console.log(cedulaAdmin);
+        console.log(cedulaAdminE);
+        if (cedulaAdminE == cedulaAdmin) {
             alert("No puedes eliminarte a ti mismo.");
             return;
         }
 
-        if (window.confirm("¿Estás seguro que quieres eliminar este administrador?")) {
+        else if (window.confirm("¿Estás seguro que quieres eliminar este administrador?")) {
             dispatch(deleteAdministrator({ cedulaAdminE, cedulaAdmin }));
         }
     };
