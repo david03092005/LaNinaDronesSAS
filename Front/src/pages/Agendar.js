@@ -23,7 +23,7 @@ function Agendar() {
         fecha: '',
         horaInicio: '',
         estado: 'agendado',
-        peso: '0',
+        peso: '',
         alto: '',
         ancho: '',
         largo: '',
@@ -51,7 +51,6 @@ function Agendar() {
         setFlag(!flag);
         event.preventDefault();
         const data = new FormData();
-        console.log("Agendar:", formData.nombre);
 
         data.append("cedulaUsuario", formData.cedulaUsuario);
         data.append("cedulaAdmin", formData.cedulaAdmin);
@@ -65,8 +64,6 @@ function Agendar() {
         data.append("destino", formData.destino);
 
         dispatch(agregarAgendamiento(data));
-        
-        console.log(formData);
     };
 
     //Liminar fecha y hora
@@ -92,13 +89,14 @@ function Agendar() {
 
     useEffect(() => {
         fetch("http://localhost/back/getApptCalender.php")
-            .then(res => res.json())
-            .then(data => {
-                const fechas = data
-                    .filter(fecha => !isNaN(new Date(fecha)))  // filtrar inválidas
-                    .map(fecha => new Date(fecha + 'T00:00:00')); // asegurar formato válido
-                setFechasAgendadas(fechas);
-            });
+        .then(res => res.json())
+        .then(data => {
+            const fechas = data
+            .filter(fecha => !isNaN(new Date(fecha)))  // filtrar inválidas
+            .map(fecha => new Date(fecha + 'T00:00:00')); // asegurar formato válido
+            setFechasAgendadas(fechas);
+        });
+        console.log(fechasAgendadas);
     }, [flag]);
 /*
     useEffect(() => {

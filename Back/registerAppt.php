@@ -141,7 +141,7 @@ foreach ($tiposValidos as $tipoRobot) {
 }
 
 
-if ($robotDisponible == 0 || $robotDisponible == 1) {
+if ($robotDisponible !== null) {
     // Insertar en la tabla agendamiento
     $sqlInsert = "INSERT INTO agendamiento (cedula_usuario, cedula_administrador, fecha, hora_inicio, hora_final, estado_agendamiento, ID_robot, ID_bateria, destino)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

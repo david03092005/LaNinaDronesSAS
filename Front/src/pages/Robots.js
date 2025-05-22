@@ -1,13 +1,15 @@
 import Navbar from '../components/navbar/Navbar'
 import './Robots.css'
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRobots, seleccionarRobot } from '../redux/robotsSlice';
 import { getBaterias, seleccionarBateria } from '../redux/bateriasSlice';
+//import Webcam from 'react-webcam';
 
 
 
 function Robots() {
+    const ip = "http://10.196.76.160:8080/video"; 
     const dispatch = useDispatch();
 
     const robots = useSelector((state) => state.robots.lista);
@@ -25,6 +27,26 @@ function Robots() {
         dispatch(seleccionarBateria(bateria));
         dispatch(seleccionarRobot(null));
     }
+
+    //Camara
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const [imageSrc, setImageSrc] = useState(null);
+
+    const capture = () => {
+        const video = videoRef.current;
+        const canvas = canvasRef.current;
+        if (!video || !canvas) return;
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const dataURL = canvas.toDataURL('image/png');
+        setImageSrc(dataURL);
+      };
 
     useEffect(() => {
         const data = new FormData();
@@ -105,7 +127,23 @@ function Robots() {
     
             <div className="sidebar-camera">
               <h5 className="fw-bold">Cámara en vivo</h5>
-              <div className="camera-placeholder" />
+                {robotSeleccionado && (
+                  <>
+                  <img className='camera-placeholder'
+                    ref={videoRef}
+                    src={ip}
+                    autoPlay
+                    playsInline
+                    muted
+                    width="350"
+                    height="250"
+                  />
+
+                  <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+                </>
+
+                )}
               <h6 className="fw-bold mt-4">Historial de pedidos</h6>
               <ul className="historial-list">
                 {(robotSeleccionado?.historial || bateriaSeleccionada?.historial)?.map((item, index) => (

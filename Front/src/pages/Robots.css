@@ -104,12 +104,16 @@
     justify-content: start;
   }
   
-  .camera-placeholder {
-    background-color: #ccd6dd;
-    height: 200px;
-    border-radius: 1rem;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
-  }
+.camera-placeholder {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  height: 250px;
+  width: 450px;
+  margin: 0 auto;
+}
   
   .historial-list {
     list-style: none;

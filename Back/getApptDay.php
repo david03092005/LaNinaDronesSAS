@@ -7,15 +7,9 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-$dateFilter = date("Y-m-d", strtotime("-7 days"));
 $date = date("Y-m-d");
 
-$querry = "SELECT * FROM agendamiento WHERE fecha >= '$dateFilter' And fecha <= '$date'";
-
-// if ($dateFilter) {
-//    $conditions[] = "fecha >= '$dateFilter'";
-//    $querry .= " WHERE " . implode(" AND ", $conditions); 
-// }
+$querry = "SELECT * FROM agendamiento WHERE fecha = '$date'";
 
 $result = mysqli_query($conexion, $querry);
 
